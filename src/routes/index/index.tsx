@@ -63,14 +63,14 @@ export function Home() {
       </div>
       <div className="flex flex-col md:flex-row">
         <div className='flex bg-[#131313] h-screen md:w-1/2 top-0 right-0'>
-          <div className="flex flex-col relative w-full h-full backdrop-blur-md text-white">
+          <div className="flex flex-col relative w-full h-full backdrop-blur-md text-white justify-between">
             <div className="m-auto md:m-20">
               <h1 className="text-white text-4xl">Hajder Al-Remahy</h1>
               <h4 className="text-gray-400 text-2xl">Mjukvaruutvecklare</h4>
             </div>
-            <div className="m-auto md:m-20 flex flex-col gap-2">
-              <span>LinkedIn</span>
-              <span>GitHub</span>
+            <div className="m-auto md:m-20 flex flex-col gap-2 md:items-start items-center text-gray-300">
+              <a href="https://www.linkedin.com/in/hajderalremahy" className="underline hover:text-white w-fit">LinkedIn</a>
+              <a href="https://www.github.com/hajduty" className="underline hover:text-white w-fit">GitHub</a>
             </div>
           </div>
         </div>

@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type Key } from "react";
 import { useParams } from "react-router-dom";
 import { MDXProvider } from '@mdx-js/react';
 import 'highlight.js/styles/a11y-dark.css';
 import { useAnimatedNavigate } from "../../hooks/useIsNavigated";
+import { Tag } from "../index/components/ProjectCard";
 
 const components = {
   h1: ({ className = '', ...props }: any) => (
@@ -84,13 +85,14 @@ const components = {
 
 export default components;
 
-const modules: Record<string, { default: React.ComponentType }> =
+const modules: Record<string, { default: React.ComponentType, frontmatter?: any }> =
   import.meta.glob('../../projects/*.mdx', { eager: true });
 
 export const Project = () => {
   const { slug } = useParams();
 
   const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(null);
+  const [frontmatter, setFrontmatter] = useState<any>(null);
   const navigate = useAnimatedNavigate();
 
   useEffect(() => {
@@ -99,10 +101,14 @@ export const Project = () => {
     console.log("slugupdae");
     if (mod) {
       setMDXContent(() => mod.default);
+      setFrontmatter(mod.frontmatter || {});
     } else {
       setMDXContent(() => () => <div>{slug} not found</div>);
+      setFrontmatter(null);
     }
   }, [slug]);
+
+  console.log(frontmatter);
 
   if (!MDXContent) return (
     <>
@@ -111,13 +117,20 @@ export const Project = () => {
 
   return (
     <>
+      <title>{frontmatter.title}</title>
       <div className="min-h-screen w-full bg-[#131313] flex justify-center items-start px-4 py-6">
         <div className="flex flex-col gap-2">
           <div>
-            <p className="rounded-sm p-2 text-lg text-gray-400 pointer-none select-none">
+            <p className="rounded-sm py-2 text-lg text-gray-400 pointer-none select-none">
               <button className="text-gray-400 cursor-pointer hover:text-white transform duration-250" onClick={() => navigate('/')}>Start</button> &gt; {slug}
             </p>
           </div>
+          <h1 className="text-3xl font-bold text-white">{frontmatter!.title}</h1>
+          <h1 className="text-1xl text-gray-300">{frontmatter!.date}</h1>
+          <div className="h-fit w-fit flex gap-2 flex-row">
+            {frontmatter.tags.map((tag: Key | null | undefined) => <Tag key={tag} title={tag!.toString()} color="default" />)}
+          </div>
+
           <div className="w-full max-w-4xl bg-[#0C0C0C] rounded-md p-6 sm:p-8">
             <MDXProvider components={components}>
               <main className="prose prose-invert dark:prose-invert max-w-none">
