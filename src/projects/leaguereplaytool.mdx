@@ -1,0 +1,34 @@
+# LeagueReplayTool – Director Tool for League of Legends Replay API  
+**Date:** June 10, 2025
+
+## Try It Out
+[ View the GitHub Repo](https://github.com/hajduty/leaguereplaytool)
+
+## What is LeagueReplayTool?
+
+A React + Electron application that interfaces with the League of Legends Replay API. It allows users to add keyframes to the internal game replay system and modify graphic variables such as fog, depth of field, and camera settings to create cinematic replays.
+This tool was created because the original League Director lacks an internal-like UI and cannot stay always on top since it doesn’t work as an overlay. LeagueReplayTool solves these issues by providing an always-on-top external UI.
+
+## Screenshot
+
+![LeagueReplayTool](https://imgur.com/6BKfkJ4.png)
+
+## Features
+
+- External always-on-top UI  
+- Easy-to-use sequencer/keyframe system (less customizable than League Director)  
+- Modify visual variables like fog color, field of view, camera rotation, depth of field  
+
+## To Do
+
+- Add customizable keybinds  
+- Hide UI when game window is not focused  
+- Implement custom interpolation between keyframes  
+- Allow users to select which options are keyframed in the sequencer (fog color, FOV, camera rotation, etc.)  
+- Config system to save render settings (fog color, DOF values, skybox, etc.)
+
+## Tech Stack
+
+- **Frontend:** React  
+- **Desktop:** Electron  
+- **API:** League of Legends Replay API
