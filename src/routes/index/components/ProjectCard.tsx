@@ -20,7 +20,7 @@ const getColor = (color: TagProps["color"]) => {
   return c;
 }
 
-const Tag = ({ color, title }: TagProps) => {
+export const Tag = ({ color, title }: TagProps) => {
   const colorClass = getColor(color)
   return <span className={`inline-flex gap-2 rounded p-1 text-xs font-bold select-none ${colorClass}`}>{title}</span>
 }
