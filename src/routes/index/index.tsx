@@ -1,5 +1,5 @@
 import { type ProjectCardProps, ProjectCard } from "./components/ProjectCard"
-import Shader from "./components/Shader"
+import Bg from "../../assets/Bg.mp4"
 
 const projects: ProjectCardProps[] = [
   {
@@ -39,7 +39,7 @@ export function Home() {
     <>
       <div
         style={{
-          opacity: "5%",
+          opacity: "10%",
           position: "fixed",
           top: 0,
           left: 0,
@@ -49,7 +49,17 @@ export function Home() {
           zIndex: 0,
         }}
       >
-        <Shader />
+        <video autoPlay loop muted style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+        >
+          <source src={Bg} type="video/mp4" />
+        </video>
       </div>
       <div className="flex flex-col md:flex-row">
         <div className='flex bg-[#131313] h-screen md:w-1/2 top-0 right-0'>
@@ -65,7 +75,7 @@ export function Home() {
           </div>
         </div>
         <div className='bg-[#0C0C0C] h-screen md:w-1/2 top-0 right-0'>
-          <div className="flex flex-col relative w-full h-full backdrop-blur-lg text-white">
+          <div className="flex flex-col relative w-full h-full backdrop-blur-xl text-white">
             <span className="mx-auto py-20 text-3xl text-white md:hidden block">
               <p>Projects</p>
             </span>
