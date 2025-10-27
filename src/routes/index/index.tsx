@@ -1,18 +1,18 @@
 import { type ProjectCardProps, ProjectCard } from "./components/ProjectCard"
 import Bg from "../../assets/Bg.mp4"
-
+//"React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "SignalR", "gRPC", "Azure",
 const projects: ProjectCardProps[] = [
   {
     title: "teamsketch",
     year: 2025,
     href: "/projects/teamsketch",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "TypeScript" }, { title: "Tailwind" }]
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" },{ title: "SignalR" },{ title: "AKS" },{ title: "Redis" },{ title: "gRPC" }, { title: "React" }, { title: "TypeScript" }]
   },
   {
     title: "webclicker",
     year: 2024,
     href: "/projects/webclicker",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "C++" }, { title: "Tailwind" }, { title: "TCP" }, { title: "MySQL" }]
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "C++" }, { title: "Tailwind" }, { title: "MySQL" }]
   },
   {
     title: "leaguereplaytool",

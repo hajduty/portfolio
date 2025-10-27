@@ -1,48 +1,61 @@
 ---
-title: "TeamSketch – Real-time drawing"
-date: "June 10, 2025"
-tags: ["React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#"]
+title: "TeamSketch – Real-time Collaborative Whiteboard"
+date: "October 27, 2025"
+tags: ["React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "SignalR", "gRPC", "Azure", "AKS", "ACR", "DevOps"]
 ---
 
 ![TeamSketch Screenshot](https://imgur.com/4rdRkqk.png)
-> A little peek at the UI – clean, simple, to the point.
+> A clean, collaborative space for sketching ideas together in real time.
 
-##  Try It Out
+## Try It Out
 
 [ Check out the live demo](soon)
 
 [ View the GitHub Repo](https://github.com/hajduty/teamsketch)
 
-##  What is TeamSketch?
+## What is TeamSketch?
 
-TeamSketch is a real-time collaborative whiteboard app I built for fun. The idea came from wanting a simple place where I (and anyone else) could sketch out ideas, flowcharts, or doodles *together*, without needing to install anything.
+TeamSketch is a real-time collaborative whiteboard app designed for brainstorming, diagramming, or just doodling with others — instantly and directly in the browser.  
+It started as a simple fullstack app, but has since evolved into being **microservice-based** and focused on scalability and real-time performance.
 
 ## Features
 
--  Real-time drawing with multiple users
--  Basic drawing tools (pen, text, clear canvas)
--  Easy room system (join by link)
--  Auto-saving your sketch
+- 🧠 Real-time drawing and updates with multiple users  
+- ✏️ Basic drawing tools (pen, text, erase, clear canvas)  
+- 🔗 Room-based collaboration (shareable links)  
+- 💾 Automatic session saving and state recovery  
+- ⚡ Optimized real-time communication using **SignalR** and **Redis Pub/Sub**
 
 <br/>
-##  Tech Stack
 
-- **Frontend**: React + TypeScript + Konva + Y.js  
-- **Backend**: .NET + MongoDB + YDotNet  
-- **Hosting**: Self-hosted Coolify instance
+## Tech Stack
+
+- **Frontend:** React, TypeScript, Konva, Y.js, Zustand 
+- **Backend:** .NET 8 microservices using gRPC for inter-service communication  
+- **Infrastructure**:  
+Redis for backplane and event broadcasting  
+Azure Kubernetes Service (AKS) for deployment and scaling  
+Azure SQL Database for persistent data storage  
+Azure Container Registry (ACR) for container image management  
+
 <br/>
-##  What I Learned
 
-- How to manage real-time syncing across clients with Y.js
-- Handling performance issues with thousands of tiny draw events
-- Building something that’s fun to *use*, not just *make*
+## What I Learned
+
+- Designing and deploying a distributed **microservice architecture**  
+- Using **SignalR** with **Redis backplane** for high-performance real-time updates  
+- Implementing **gRPC** communication between backend services  
+- Managing deployments and scaling with **Azure Kubernetes Service**  
+- Structuring code for independent, maintainable, and scalable service boundaries   
 <br/>
+Is this the best solution for such a simple app? **No.**
+I just wanted to learn as many different technologies as possible, and apply them in a *real* project.  
 
-##  What’s Next?
-Maybe nothing. Maybe everything. Some ideas I might explore later:
+## What’s Next?
 
-- Adding different brush types
-- Exporting to PNG/PDF
-- Optimizing for mobile & tablets
+- 🎨 Advanced tools (brushes, shapes, layers)  
+- 📤 Export to PNG/PDF  
+- 📱 Better mobile & tablet support  
+- 👥 Improved collaboration features (notes, better role management)
 
-Or maybe I just leave it as is and start another random project.
+Or maybe I just leave it as is and move on to the next experiment.
