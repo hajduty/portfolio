@@ -9,22 +9,19 @@ tags: ["React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "Signal
 
 ## Try It Out
 
-[ Check out the live demo](soon)
+[ Check out the live demo](https://teamsketch.hajder.app)
 
-[ View the GitHub Repo](https://github.com/hajduty/teamsketch)
+[ View the GitHub Repo](https://github.com/hajduty/teamsketch_backend)
 
 ## What is TeamSketch?
 
 TeamSketch is a real-time collaborative whiteboard app designed for brainstorming, diagramming, or just doodling with others — instantly and directly in the browser.  
-It started as a simple fullstack app, but has since evolved into being **microservice-based** and focused on scalability and real-time performance.
 
 ## Features
 
-- 🧠 Real-time drawing and updates with multiple users  
-- ✏️ Basic drawing tools (pen, text, erase, clear canvas)  
-- 🔗 Room-based collaboration (shareable links)  
-- 💾 Automatic session saving and state recovery  
-- ⚡ Optimized real-time communication using **SignalR** and **Redis Pub/Sub**
+- Real-time drawing and updates with multiple users  
+- Room-based collaboration (shareable links)  
+- Automatic session saving and state recovery
 
 <br/>
 
@@ -45,17 +42,20 @@ Azure Container Registry (ACR) for container image management
 - Designing and deploying a distributed **microservice architecture**  
 - Using **SignalR** with **Redis backplane** for high-performance real-time updates  
 - Implementing **gRPC** communication between backend services  
-- Managing deployments and scaling with **Azure Kubernetes Service**  
-- Structuring code for independent, maintainable, and scalable service boundaries   
+- Managing deployments in Azure DevOps
+- Deploying to Azure Kubernetes Service
+- To stick to stateless monoliths
 <br/>
-Is this the best solution for such a simple app? **No.**
-I just wanted to learn as many different technologies as possible, and apply them in a *real* project.  
+
+Is this the best setup for such a simple app? **No**
+Would it make sense if it had real users? **Maybe**
+
+The goal was simply to learn and experiment with different technologies in a real project.
+Using a microservice architecture for an app this small just makes development and deployment more complicated.
 
 ## What’s Next?
 
 - 🎨 Advanced tools (brushes, shapes, layers)  
-- 📤 Export to PNG/PDF  
+- 📤 Export to PNG/PDF
 - 📱 Better mobile & tablet support  
 - 👥 Improved collaboration features (notes, better role management)
-
-Or maybe I just leave it as is and move on to the next experiment.
