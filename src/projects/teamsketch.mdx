@@ -5,7 +5,7 @@ tags: ["React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "Signal
 ---
 
 ![TeamSketch Screenshot](https://imgur.com/4rdRkqk.png)
-> A clean, collaborative space for sketching ideas together in real time.
+> A collaborative space for sketching ideas together in real time.
 
 ## Try It Out
 
@@ -30,17 +30,18 @@ TeamSketch is a real-time collaborative whiteboard app designed for brainstormin
 - **Frontend:** React, TypeScript, Konva, Y.js, Zustand 
 - **Backend:** .NET 8 microservices using gRPC for inter-service communication  
 - **Infrastructure**:  
-Redis for backplane and event broadcasting  
+Redis as backplane and for event broadcasting  
 Azure Kubernetes Service (AKS) for deployment and scaling  
-Azure SQL Database for persistent data storage  
+Azure SQL Database for storage
 Azure Container Registry (ACR) for container image management  
+Azure Pipelines & GitHub Actions for CI/CD
 
 <br/>
 
 ## What I Learned
 
-- Designing and deploying a distributed **microservice architecture**  
-- Using **SignalR** with **Redis backplane** for high-performance real-time updates  
+- Designing and deploying microservices  
+- Using **SignalR**, **Redis** & **Yjs** for high-performance real-time updates  
 - Implementing **gRPC** communication between backend services  
 - Managing deployments in Azure DevOps
 - Deploying to Azure Kubernetes Service
