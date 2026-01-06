@@ -3,6 +3,12 @@ import Bg from "../../assets/Bg.mp4"
 //"React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "SignalR", "gRPC", "Azure",
 const projects: ProjectCardProps[] = [
   {
+    title: "easycourse",
+    year: 2025,
+    href: "/projects/easycourse",
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" },{ title: "React" },{ title: "C#" },{ title: "TypeScript" },{ title: "SQL" }, { title: "TailwindCSS" }]
+  },
+  {
     title: "teamsketch",
     year: 2025,
     href: "/projects/teamsketch",
@@ -19,12 +25,6 @@ const projects: ProjectCardProps[] = [
     year: 2024,
     href: "/projects/leaguereplaytool",
     tags: [{ title: "React" }, { title: "Electron" }, { title: "Tailwind" }]
-  },
-  {
-    title: "Notes",
-    year: 2024,
-    href: "/projects/Notes",
-    tags: [{ title: "C#" }, { title: "Blazor" }]
   },
   {
     title: "prerecs",
