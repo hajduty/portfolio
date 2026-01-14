@@ -15,7 +15,7 @@ tags: ["React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "Signal
 
 ## What is TeamSketch?
 
-TeamSketch is a real-time collaborative whiteboard app designed for brainstorming, diagramming, or just doodling with others — instantly and directly in the browser.  
+TeamSketch is a real-time collaborative whiteboard app designed for brainstorming, diagramming, or just doodling with others, instantly and directly in the browser.  
 
 ## Features
 
@@ -28,16 +28,25 @@ TeamSketch is a real-time collaborative whiteboard app designed for brainstormin
 ## Tech Stack
 
 - **Frontend:** React, TypeScript, Konva, Y.js, Zustand 
-- **Backend:** .NET 8 microservices using gRPC for inter-service communication  
-- **Infrastructure**:  
-Redis as backplane and for event broadcasting  
-Azure Kubernetes Service (AKS) for deployment and scaling  
-Azure SQL Database for storage
-Azure Container Registry (ACR) for container image management  
-Azure Pipelines & GitHub Actions for CI/CD
+- **Backend:** .NET 8 microservices, gRPC for inter-service communication
 
 <br/>
 
+### Infrastructure
+
+- Azure Kubernetes Service (AKS) for container orchestration and scaling
+- Azure SQL Database for persistent storage
+- Redis for SignalR scale-out and internal event broadcasting
+- Azure Container Registry (ACR) for container image management
+
+### CI/CD
+
+- GitHub Actions for build and test pipelines
+- Azure Pipelines for deployment to AKS
+<br/>
+
+![TeamSketch Screenshot](https://imgur.com/pHPaRyx.png)
+> overview of services
 ## What I Learned
 
 - Designing and deploying microservices  
@@ -51,12 +60,12 @@ Azure Pipelines & GitHub Actions for CI/CD
 Is this the best setup for such a simple app? **No**
 Would it make sense if it had real users? **Maybe**
 
-The goal was simply to learn and experiment with different technologies in a real project.
+The goal was to learn and experiment with different technologies in a real project.
 Using a microservice architecture for an app this small just makes development and deployment more complicated.
 
 ## What’s Next?
 
-- 🎨 Advanced tools (brushes, shapes, layers)  
-- 📤 Export to PNG/PDF
-- 📱 Better mobile & tablet support  
-- 👥 Improved collaboration features (notes, better role management)
+- Advanced tools (brushes, shapes, layers)  
+- Export to PNG/PDF
+- Better mobile & tablet support  
+- Improved collaboration features (notes, better role management)
