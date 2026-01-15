@@ -6,20 +6,22 @@ interface LocationState {
 
 export function useIsNavigated() {
   const location = useLocation();
-  const state = location.state as LocationState;
-  return !!state?.fromNavigation;
+  const state = location.state as LocationState | null;
+
+  const navEntries =
+    typeof window !== "undefined"
+      ? performance.getEntriesByType("navigation")
+      : [];
+
+  const navType =
+    navEntries.length > 0 ? (navEntries[navEntries.length - 1] as any).type : null;
+
+  return state?.fromNavigation === true || navType === "back_forward";
 }
 
-// Custom navigate hook
-import { useNavigate } from 'react-router-dom';
+export function useShouldAnimateRoute() {
+  const location = useLocation();
+  const state = location.state as { animated?: boolean } | null;
 
-export function useAnimatedNavigate() {
-  const navigate = useNavigate();
-  
-  return (to: string, options?: { replace?: boolean; state?: any }) => {
-    navigate(to, {
-      ...options,
-      state: { ...options?.state, fromNavigation: true }
-    });
-  };
+  return state?.animated === true;
 }

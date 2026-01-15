@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useAnimatedNavigate } from "../../../hooks/useAnimatedNavigate"
 
 type TagProps = {
   color?: keyof typeof colors
@@ -7,7 +7,7 @@ type TagProps = {
 
 const colors = {
   favorite: "bg-indigo-600 text-white",
-  default: "bg-neutral-700/50 text-gray-300"
+  default: "bg-neutral-700/80 text-neutral-300"
 }
 
 const getColor = (color: TagProps["color"]) => {
@@ -33,7 +33,7 @@ export type ProjectCardProps = {
 }
 
 export const ProjectCard = ({ title, year, tags }: ProjectCardProps) => {
-  const navigate = useNavigate();
+  const navigate = useAnimatedNavigate();
 
   return (
     <button type="button" className="flex flex-col gap-2 items-start w-full hover:bg-neutral-800 p-4 px-8 rounded duration-150 transform cursor-pointer" onClick={() => navigate(`projects/${title}`)}>
