@@ -5,17 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && ROLLUP_USE_NATIVE=false vite build",
+    "build": "tsc -b && cross-env ROLLUP_USE_NATIVE=false vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdx-js/preact": "^3.1.1",
     "@mdx-js/react": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
     "@tailwindcss/vite": "^4.1.8",
-    "motion": "^12.17.0",
     "preact": "^10.23.2",
-    "react-router-dom": "^7.6.2",
+    "preact-iso": "^2.11.1",
     "rehype-highlight": "^7.0.2",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/mdx": "^2.0.13",
+    "cross-env": "^10.1.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

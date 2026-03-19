@@ -1,10 +1,14 @@
-import { BrowserRouter } from 'react-router-dom';
-import { AnimatedRoutes } from './routes/AnimatedRoute';
+import { LocationProvider, Router, Route } from 'preact-iso';
+import { Home } from './routes/index';
+import Project from './routes/project/Project';
 
 export function App() {
   return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
+    <LocationProvider>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/projects/:slug" component={Project} />
+      </Router>
+    </LocationProvider>
   );
 }

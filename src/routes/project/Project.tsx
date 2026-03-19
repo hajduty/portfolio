@@ -1,105 +1,53 @@
-import { useState, useEffect, type Key } from "react";
-import { useParams } from "react-router-dom";
-import { MDXProvider } from '@mdx-js/react';
-import 'highlight.js/styles/a11y-dark.css';
-import { Tag } from "../index/components/ProjectCard";
-import { useAnimatedNavigate } from "../../hooks/useAnimatedNavigate";
+import { useState, useEffect, useRef } from "preact/hooks";
+import { useLocation } from "preact-iso";
+import { MDXProvider } from "@mdx-js/preact";
+import type { ComponentType } from "preact";
+import "highlight.js/styles/a11y-dark.css";
+import "./Project.css";
 
 const components = {
-  h1: ({ className = '', ...props }: any) => (
-    <h1
-      className={`${className} text-white text-3xl font-bold py-6`}
-      {...props}
-    />
-  ),
-  h2: ({ className = '', ...props }: any) => (
-    <h1
-      className={`${className} text-white text-2xl py-4`}
-      {...props}
-    />
-  ),
-  h3: ({ className = '', ...props }: any) => (
-    <h3
-      className={`${className} text-white text-xl py-2`}
-      {...props}
-    />
-  ),
-  h4: ({ className = '', ...props }: any) => (
-    <h4
-      className={`${className} text-white text-lg py-2`}
-      {...props}
-    />
-  ),
-  a: (props: any) => (
-    <a
-      {...props}
-      className="text-gray-400 underline"
-    />
-  ),
-  code: (props: any) => (
-    <code
-      {...props}
-      className="text-white rounded px-1 py-0.5 font-mono text-sm"
-    />
-  ),
-  pre: (props: any) => (
-    <pre
-      {...props}
-      className="bg-neutral-900 text-white rounded p-4 overflow-x-auto font-mono text-sm"
-    />
-  ),
-  blockquote: (props: any) => (
-    <blockquote
-      {...props}
-      className="border-l-4 border-gray-300 italic pl-4"
-    />
-  ),
-  ul: (props: any) => (
-    <ul
-      {...props}
-      className="list-disc list-inside space-y-1 text-gray-400"
-    />
-  ),
-  ol: (props: any) => (
-    <ol
-      {...props}
-      className="list-decimal list-inside space-y-1 text-gray-400"
-    />
-  ),
-  li: (props: any) => (
-    <li
-      {...props}
-      className="list-decimal list-inside space-y-1 text-gray-400"
-    />
-  ),
-  p: ({ className = '', ...props }: any) => (
-    <p
-      className={`${className} mb-4 text-gray-400 whitespace-pre-line`}
-      {...props}
-    />
-  ),
-  br: () => (
-    <br />
-  ),
+  h1: ({ ...props }: any) => <h1 {...props} />,
+  h2: ({ ...props }: any) => <h2 {...props} />,
+  h3: ({ ...props }: any) => <h3 {...props} />,
+  h4: ({ ...props }: any) => <h4 {...props} />,
+  a: ({ ...props }: any) => <a {...props} />,
+  code: ({ ...props }: any) => <code {...props} />,
+  pre: ({ ...props }: any) => <pre {...props} />,
+  blockquote: ({ ...props }: any) => <blockquote {...props} />,
+  ul: ({ ...props }: any) => <ul {...props} />,
+  ol: ({ ...props }: any) => <ol {...props} />,
+  li: ({ ...props }: any) => <li {...props} />,
+  p: ({ ...props }: any) => <p {...props} />,
+  br: () => <br />,
   img: (props: any) => (
-    <img
-      {...props}
-      className="w-full h-auto rounded-lg"
-    />
-  )
+    <figure>
+      <img {...props} />
+    </figure>
+  ),
+  hr: () => <hr />,
+  table: ({ ...props }: any) => <table {...props} />,
+  th: ({ ...props }: any) => <th {...props} />,
+  td: ({ ...props }: any) => <td {...props} />,
 };
 
-export default components;
+const modules: Record<
+  string,
+  { default: ComponentType; frontmatter?: any }
+> = import.meta.glob("../../projects/*.mdx", { eager: true });
 
-const modules: Record<string, { default: React.ComponentType, frontmatter?: any }> =
-  import.meta.glob('../../projects/*.mdx', { eager: true });
+const NotFound = ({ slug }: { slug: string }) => (
+  <div className="p-not-found">{slug} not found</div>
+);
 
 export const Project = () => {
-  const { slug } = useParams();
-  const navigate = useAnimatedNavigate();
+  const location = useLocation();
+  const slug = location.path.split("/").pop() ?? "";
 
-  const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(null);
+  const [MDXContent, setMDXContent] = useState<ComponentType | null>(null);
   const [frontmatter, setFrontmatter] = useState<any>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [parallaxY, setParallaxY] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const path = `../../projects/${slug}.mdx`;
@@ -108,72 +56,166 @@ export const Project = () => {
       setMDXContent(() => mod.default);
       setFrontmatter(mod.frontmatter || {});
     } else {
-      setMDXContent(() => () => <div>{slug} not found</div>);
+      setMDXContent(() => () => <NotFound slug={slug} />);
       setFrontmatter(null);
     }
   }, [slug]);
 
-  if (!MDXContent) return (
-    <>
-    </>
-  );
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 60);
+      // parallax: image moves at 40% of scroll speed
+      setParallaxY(y * 0.4);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (!MDXContent) return null;
+
+  const hasHero = !!frontmatter?.heroImage;
 
   return (
-    <>
-      <title>{frontmatter.title}</title>
-      <div className="min-h-screen w-full bg-[#0C0C0C]">
-        {frontmatter.heroImage && (
-          <div className="relative w-full h-100 sm:h-125 overflow-hidden">
-            <img 
-              src={frontmatter.heroImage} 
-              alt={frontmatter.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/70 to-[#0C0C0C]" />
-            
-            <div className="absolute top-0 left-0 right-0 px-4 sm:px-6 lg:px-8 py-4 z-10">
-              <div className="max-w-5xl mx-auto">
-                <div className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
-                  <button 
-                    className="text-gray-300 hover:text-white transition-colors cursor-pointer" 
-                    onClick={() => navigate('/')}
-                  >
-                    Start
-                  </button>
-                  <span className="text-gray-500 select-none">/</span>
-                  <span className="text-gray-200 select-none">{slug}</span>
-                </div>
-              </div>
-            </div>
+    <div class="min-h-screen w-full bg-[#0B0B0B] text-[#D4D4D4] font-[Geist,Helvetica_Neue,sans-serif] antialiased">
+      <title>{frontmatter?.title ?? slug}</title>
 
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center px-4">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
-                  {frontmatter.title}
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-300 mb-4">{frontmatter.date}</p>
-                <div className="flex gap-2 flex-wrap justify-center opacity-100">
-                  {frontmatter.tags.map((tag: Key | null | undefined) => (
-                    <Tag key={tag} title={tag!.toString()} color="default" />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ── Nav ── */}
+      <nav class={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-[clamp(1.25rem,4vw,2.5rem)] py-4 transition-all duration-300 ${scrolled ? "border-b border-[#222] bg-[#0B0B0B]/90" : "border-b border-transparent"}`}>
+        <div class="flex items-center gap-2 font-normal text-[0.75rem] text-[#D4D4D4]">
+          <button
+            class="bg-none border-none p-0 cursor-pointer font-normal text-[0.75rem] text-[#D4D4D4] hover:text-[#F0F0F0] transition-colors"
+            onClick={() => location.route("/")}
+          >
+            index
+          </button>
+          <span class="text-[#888]">/ {slug}</span>
+        </div>
+        {frontmatter?.date && (
+          <span class="font-normal text-[0.75rem] text-[#D4D4D4]">{frontmatter.date}</span>
         )}
+      </nav>
 
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-[#131313] rounded-lg p-6 sm:p-10">
-              <MDXProvider components={components}>
-                <main className="prose prose-invert dark:prose-invert max-w-none">
-                  <MDXContent />
-                </main>
-              </MDXProvider>
+      {/* ── Hero ── */}
+      {hasHero ? (
+        <div
+          ref={heroRef}
+          class="relative w-full overflow-hidden bg-black"
+          style={{ height: "clamp(320px, 50vh, 560px)" }}
+        >
+          {/* Parallax image — taller than container so it has room to move */}
+          <img
+            src={frontmatter.heroImage}
+            alt=""
+            aria-hidden={true}
+            class="absolute inset-x-0 w-full object-cover opacity-[0.32] pointer-events-none select-none"
+            style={{
+              height: "140%",
+              top: "-20%",
+              transform: `translateY(${parallaxY}px)`,
+              willChange: "transform",
+            }}
+          />
+
+          {/* Gradient fade to bg */}
+          <div class="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, #0B0B0B 100%)" }} />
+
+          {/* Title block */}
+          <div
+            class="absolute bottom-0 left-0 right-0 mx-auto px-[clamp(1.25rem,4vw,2.5rem)]"
+            style={{ maxWidth: "calc(860px + 2 * clamp(1.25rem,4vw,2.5rem))", paddingBottom: "clamp(2rem,5vw,3.5rem)" }}
+          >
+            <h1 class="font-semibold text-[#F0F0F0] tracking-tight m-0 mb-1" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", lineHeight: 1.08, letterSpacing: "-0.03em" }}>
+              {frontmatter.title}
+            </h1>
+            {frontmatter.subtitle && (
+              <p class="font-normal text-[0.8rem] text-[#888] mt-1 mb-3 tracking-wide">
+                {frontmatter.subtitle}
+              </p>
+            )}
+            <div class="flex items-center gap-4 flex-wrap">
+              {frontmatter.date && (
+                <span class="font-normal text-[0.75rem] text-[#D4D4D4]">{frontmatter.date}</span>
+              )}
+              {frontmatter.tags?.length > 0 && (
+                <>
+                  <span class="w-px h-3 bg-[#333] shrink-0" />
+                  <span class="font-normal text-[0.75rem] text-[#D4D4D4]">
+                    {frontmatter.tags.join(", ")}
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>
+      ) : (
+        /* ── No-hero header ── */
+        <div
+          class="mx-auto border-b border-[#222]"
+          style={{
+            maxWidth: "calc(860px + 2 * clamp(1.25rem,4vw,2.5rem))",
+            padding: "7rem clamp(1.25rem,4vw,2.5rem) 3rem",
+          }}
+        >
+          <h1 class="font-semibold text-[#F0F0F0] m-0 mb-1" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", lineHeight: 1.08, letterSpacing: "-0.03em" }}>
+            {frontmatter?.title ?? slug}
+          </h1>
+          {frontmatter?.subtitle && (
+            <p class="font-normal text-[0.8rem] text-[#888] mt-1 mb-3 tracking-wide">
+              {frontmatter.subtitle}
+            </p>
+          )}
+          <div class="flex items-center gap-4 flex-wrap">
+            {frontmatter?.date && (
+              <span class="font-normal text-[0.75rem] text-[#D4D4D4]">{frontmatter.date}</span>
+            )}
+            {frontmatter?.tags?.length > 0 && (
+              <>
+                <span class="w-px h-3 bg-[#333] shrink-0" />
+                <span class="font-normal text-[0.75rem] text-[#D4D4D4]">
+                  {frontmatter.tags.join(", ")}
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Body ── */}
+      <div
+        class="mx-auto"
+        style={{
+          maxWidth: "calc(860px + 2 * clamp(1.25rem,4vw,2.5rem))",
+          padding: "clamp(2.5rem,6vw,4rem) clamp(1.25rem,4vw,2.5rem)",
+        }}
+      >
+        <MDXProvider components={components}>
+          <article class="p-prose">
+            <MDXContent />
+          </article>
+        </MDXProvider>
       </div>
-    </>
+
+      {/* ── Footer ── */}
+      <div class="border-t border-[#222] w-full">
+        <footer
+          class="mx-auto flex items-center justify-between"
+          style={{
+            maxWidth: "calc(860px + 2 * clamp(1.25rem,4vw,2.5rem))",
+            padding: "1.75rem clamp(1.25rem,4vw,2.5rem)",
+          }}
+        >
+          <span class="font-normal text-[0.72rem] text-[#888]">/{slug}</span>
+          <button
+            class="bg-none border-none p-0 cursor-pointer font-normal text-[0.72rem] text-[#D4D4D4] hover:text-[#F0F0F0] transition-colors"
+            onClick={() => location.route("/")}
+          >
+            index
+          </button>
+        </footer>
+      </div>
+    </div>
   );
 };
+
+export default Project;

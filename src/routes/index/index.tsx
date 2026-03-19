@@ -1,169 +1,144 @@
-import { type ProjectCardProps, ProjectCard } from "./components/ProjectCard"
-import { motion } from "framer-motion"
-import Bg from "../../assets/Bg.mp4"
-import { usePlayOnce } from "../../hooks/usePlayOnce"
-//"React", "TypeScript", "Konva.js", "Y.js", ".NET", "C#", "Redis", "SignalR", "gRPC", "Azure",
-const projects: ProjectCardProps[] = [
+import { useLocation } from "preact-iso";
+
+interface Tag { title: string; color?: "favorite" | "default" }
+interface Project { title: string; year: number; href: string; tags: Tag[] }
+
+const projects: Project[] = [
   {
     title: "easycourse",
     year: 2025,
     href: "/projects/easycourse",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" },{ title: "React" },{ title: "C#" },{ title: "TypeScript" },{ title: "SQL" }, { title: "TailwindCSS" }]
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "C#" }, { title: "TypeScript" }, { title: "SQL" }],
   },
   {
     title: "teamsketch",
     year: 2025,
     href: "/projects/teamsketch",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" },{ title: "SignalR" },{ title: "AKS" },{ title: "Redis" },{ title: "gRPC" }, { title: "React" }, { title: "TypeScript" }]
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "SignalR" }, { title: "AKS" }, { title: "Redis" }, { title: "gRPC" }, { title: "React" }],
   },
   {
     title: "webclicker",
     year: 2024,
     href: "/projects/webclicker",
-    tags: [{ title: ".NET" }, { title: "React" }, { title: "C++" }, { title: "Tailwind" }, { title: "MySQL" }]
+    tags: [{ title: ".NET" }, { title: "React" }, { title: "C++" }, { title: "MySQL" }],
   },
   {
     title: "leaguereplaytool",
     year: 2024,
     href: "/projects/leaguereplaytool",
-    tags: [{ title: "React" }, { title: "Electron" }, { title: "Tailwind" }]
+    tags: [{ title: "React" }, { title: "Electron" }],
   },
   {
     title: "prerecs",
     year: 2022,
-    href: "/projects/leaguereplaytool",
-    tags: [{ title: "C++" }, { title: "Dear ImGui" }]
-  }
-]
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.3,
-    },
+    href: "/projects/prerecs",
+    tags: [{ title: "C++" }, { title: "Dear ImGui" }],
   },
-};
+];
 
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-    filter: "blur(10px)",
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.8,
-    },
-  },
-};
-
-export function Home() {
-  const shouldAnimate = usePlayOnce("home-intro");
+function ProjectRow({ project, navigate }: { project: Project; navigate: (h: string) => void }) {
+  const techTags = project.tags.filter(t => t.color !== "favorite");
+  const isFav = project.tags.some(t => t.color === "favorite");
 
   return (
-    <>
-      <div
-        style={{
-          opacity: "10%",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
-        <video autoPlay loop muted style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
-        >
-          <source src={Bg} type="video/mp4" />
-        </video>
+    <button
+      onClick={() => navigate(project.href)}
+      className="group cursor-pointer w-full text-left flex items-center gap-6 py-4 border-b border-white/6 hover:border-white/[0.14] transition-colors"
+    >
+      <span className="font-normal text-xs text-neutral-600 w-10 shrink-0">{project.year}</span>
+      <span className="text-neutral-400 text-base font-medium tracking-tight group-hover:text-white transition-colors shrink-0">
+        {project.title}{isFav && <span className="ml-2 text-sm">⭐</span>}
+      </span>
+      <div className="flex items-center gap-3 flex-wrap">
+        {techTags.map(t => (
+          <span key={t.title} className="font-normal text-[0.7rem] text-neutral-500 group-hover:text-neutral-400 transition-colors">
+            {t.title}
+          </span>
+        ))}
       </div>
-      <motion.div
-        variants={containerVariants}
-        initial={shouldAnimate ? "hidden" : false}
-        animate="visible"
-      >
-        <div className="flex flex-col md:flex-row">
-        <motion.div
-          variants={itemVariants}
-          className='flex backdrop-blur-md h-screen md:w-1/2 top-0 right-0'
-        >
-          <div className="flex flex-col relative w-full h-full backdrop-blur-md text-white justify-between">
-            <motion.div
-              variants={itemVariants}
-              className="m-auto md:m-20"
-            >
-              <motion.h1
-                variants={itemVariants}
-                className="text-white text-4xl"
-              >
+    </button>
+  );
+}
+
+export function Home() {
+  const location = useLocation();
+
+  return (
+    <div className="relative min-h-screen w-full bg-[#0d0d0d]">
+
+      <div className="relative z-10 flex min-h-screen max-w-5xl mx-auto">
+
+        {/* ── Left panel ── */}
+        <div className="hidden md:flex flex-col justify-between w-72 shrink-0 px-10 py-16" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", alignSelf: "stretch" }}>
+          <div className="flex flex-col gap-8">
+            <div>
+              <h1 className="text-2xl font-semibold text-white tracking-tight leading-tight">
                 Hajder Al-Remahy
-              </motion.h1>
-              <motion.h2
-                variants={itemVariants}
-                className="text-gray-400 text-2xl"
-              >
-                Mjukvaruutvecklare
-              </motion.h2>
-            </motion.div>
-            <motion.div
-              variants={itemVariants}
-              className="m-auto md:m-20 flex flex-col gap-2 md:items-start items-center text-gray-300"
-            >
-              <motion.a
-                variants={itemVariants}
-                href="https://www.linkedin.com/in/hajderalremahy"
-                className="underline hover:text-white w-fit"
-              >
-                LinkedIn
-              </motion.a>
-              <motion.a
-                variants={itemVariants}
-                href="https://www.github.com/hajduty"
-                className="underline hover:text-white w-fit"
-              >
-                GitHub
-              </motion.a>
-            </motion.div>
+              </h1>
+              <p className="font-normal text-sm text-neutral-500 mt-1">
+                Software Engineer
+              </p>
+            </div>
+
+            <p className="text-sm text-neutral-400 leading-relaxed">
+              Full-stack developer with five years of hobby experience, specializing in .NET backends and React frontends.
+            </p>
+            <p className="text-sm text-neutral-400 leading-relaxed -mt-4">
+              Built real-time collaborative tools, distributed microservices on Kubernetes, and data-heavy web applications.
+            </p>
+
+            <div className="flex flex-col gap-2">
+              <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
+                className="font-normal text-sm text-neutral-500 hover:text-white transition-colors w-fit cursor-pointer">
+                linkedin
+              </a>
+              <a href="https://www.github.com/hajduty" target="_blank" rel="noreferrer"
+                className="font-normal text-sm text-neutral-500 hover:text-white transition-colors w-fit cursor-pointer">
+                github
+              </a>
+            </div>
           </div>
-        </motion.div>
-        <motion.div
-          variants={itemVariants}
-          className='bg-black/35 backdrop-blur-lg h-screen md:w-1/2 top-0 right-0'
-        >
-          <div className="flex flex-col relative w-full h-full text-white">
-            <motion.span
-              variants={itemVariants}
-              className="mx-auto py-20 text-3xl text-white md:hidden block"
-            >
-              <p>Projects</p>
-            </motion.span>
-            <motion.div
-              variants={containerVariants}
-              className="h-fit w-fit md:m-auto mx-auto flex gap-2 flex-col"
-            >
-              {projects.map(project => (
-                <motion.div key={project.title} variants={itemVariants}>
-                  <ProjectCard {...project} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
         </div>
-      </motion.div>
-    </>
-  )
+
+        {/* Right panel */}
+        <div className="flex-1 flex flex-col px-10 py-16 gap-12 min-w-0">
+
+          {/* Mobile identity */}
+          <div className="md:hidden">
+            <h1 className="text-2xl font-semibold text-white tracking-tight">Hajder Al-Remahy</h1>
+            <p className="font-normal text-sm text-neutral-500 mt-1">Software Engineer</p>
+            <p className="text-sm text-neutral-400 leading-relaxed mt-4">
+              Full-stack developer with five years of hobby experience, specializing in .NET backends and React frontends.
+            </p>
+            <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+              Built real-time collaborative tools, distributed microservices on Kubernetes, and data-heavy web applications.
+            </p>
+            <div className="flex gap-5 mt-5">
+              <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
+                className="font-normal text-sm text-neutral-500 hover:text-white transition-colors cursor-pointer">
+                linkedin
+              </a>
+              <a href="https://www.github.com/hajduty" target="_blank" rel="noreferrer"
+                className="font-normal text-sm text-neutral-500 hover:text-white transition-colors cursor-pointer">
+                github
+              </a>
+            </div>
+          </div>
+
+          {/* Projects */}
+          <div className="flex flex-col gap-3">
+            <span className="font-normal text-xs tracking-widest uppercase text-neutral-300">
+              projects
+            </span>
+            <div className="border-t border-white/6">
+              {projects.map(p => (
+                <ProjectRow key={p.title} project={p} navigate={location.route} />
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:          #0B0B0B;
+  --border:      #222222;
+  --border-mid:  #333333;
+  --text:        #D4D4D4;
+  --text-strong: #F0F0F0;
+  --text-muted:  #888888;
+  --font:        'Geist', 'Helvetica Neue', sans-serif;
+  --mono:        'Geist Mono', 'Menlo', monospace;
+  --prose-width: 860px;
+  --gap:         clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* ── MDX prose ── */
+.p-prose {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.p-prose h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 2.5rem 0 0.75rem;
+}
+.p-prose h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-strong);
+  letter-spacing: -0.015em;
+  margin: 2.5rem 0 0.6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.p-prose h3 {
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 2rem 0 0.5rem;
+}
+.p-prose h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 1.5rem 0 0.35rem;
+}
+.p-prose p {
+  margin: 0 0 1.4rem;
+  white-space: pre-line;
+}
+.p-prose a {
+  color: var(--text-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--border-mid);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s;
+}
+.p-prose a:hover {
+  text-decoration-color: var(--text);
+}
+.p-prose code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  color: var(--text-strong);
+  background: #161616;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+.p-prose pre {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  background: #0E0E0E;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--border-mid);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  color: var(--text);
+}
+.p-prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+.p-prose blockquote {
+  margin: 1.75rem 0;
+  padding: 0 0 0 1.25rem;
+  border-left: 2px solid var(--border-mid);
+  color: var(--text-muted);
+  font-style: normal;
+}
+.p-prose ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4rem;
+}
+.p-prose ul li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+.p-prose ul li::before {
+  content: '–';
+  color: var(--text-muted);
+  font-family: var(--mono);
+  flex-shrink: 0;
+}
+.p-prose ol {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4rem;
+  counter-reset: ol;
+}
+.p-prose ol li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  counter-increment: ol;
+  margin-bottom: 0.4rem;
+}
+.p-prose ol li::before {
+  content: counter(ol, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.p-prose img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  margin: 2rem 0;
+}
+.p-prose figure {
+  margin: 2rem 0;
+}
+.p-prose figcaption {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  letter-spacing: 0.03em;
+}
+.p-prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+.p-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  margin: 1.75rem 0;
+}
+.p-prose th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-mid);
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+.p-prose td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.p-not-found {
+  padding: 8rem var(--gap);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+}
