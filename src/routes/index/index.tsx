@@ -1,53 +1,79 @@
 import { useLocation } from "preact-iso";
 
+const modules: Record<string, { frontmatter?: any }> =
+  import.meta.glob("../../projects/*.mdx", { eager: true });
+
+const preloadCache = new Set<string>();
+
+function preloadProject(slug: string) {
+  const mod = modules[`../../projects/${slug}.mdx`];
+  const heroImage = mod?.frontmatter?.heroImage;
+  if (!heroImage || preloadCache.has(heroImage)) return;
+  preloadCache.add(heroImage);
+  const img = new Image();
+  img.src = heroImage;
+}
+
 interface Tag { title: string; color?: "favorite" | "default" }
-interface Project { title: string; year: number; href: string; tags: Tag[] }
+interface Project { title: string; year: number; href: string; tags: Tag[]; old: boolean }
 
 const projects: Project[] = [
+  {
+    title: "jobtracker",
+    year: 2026,
+    href: "/projects/jobtracker",
+    tags: [{ color: "favorite", title: "⭐" }, { title: "C#" }, { title: "React" }, { title: "TypeScript" }, { title: "SQLite" }, { title: "Local" }],
+    old: false,
+  },
   {
     title: "easycourse",
     year: 2025,
     href: "/projects/easycourse",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "C#" }, { title: "TypeScript" }, { title: "SQL" }],
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "React" }, { title: "C#" }, { title: "TypeScript" }, { title: "SQL Server" }],
+    old: false,
   },
   {
     title: "teamsketch",
     year: 2025,
     href: "/projects/teamsketch",
-    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "SignalR" }, { title: "AKS" }, { title: "Redis" }, { title: "gRPC" }, { title: "React" }],
+    tags: [{ color: "favorite", title: "⭐" }, { title: ".NET" }, { title: "Microservices" }, { title: "Azure" }],
+    old: false,
   },
   {
     title: "webclicker",
     year: 2024,
     href: "/projects/webclicker",
     tags: [{ title: ".NET" }, { title: "React" }, { title: "C++" }, { title: "MySQL" }],
+    old: true,
   },
   {
     title: "leaguereplaytool",
     year: 2024,
     href: "/projects/leaguereplaytool",
     tags: [{ title: "React" }, { title: "Electron" }],
+    old: true,
   },
   {
     title: "prerecs",
     year: 2022,
     href: "/projects/prerecs",
     tags: [{ title: "C++" }, { title: "Dear ImGui" }],
+    old: true,
   },
 ];
 
 function ProjectRow({ project, navigate }: { project: Project; navigate: (h: string) => void }) {
   const techTags = project.tags.filter(t => t.color !== "favorite");
-  const isFav = project.tags.some(t => t.color === "favorite");
 
   return (
     <button
       onClick={() => navigate(project.href)}
+      onMouseEnter={() => preloadProject(project.title)}
       className="group cursor-pointer w-full text-left flex items-center gap-6 py-4 border-b border-white/6 hover:border-white/[0.14] transition-colors"
     >
       <span className="font-normal text-xs text-neutral-600 w-10 shrink-0">{project.year}</span>
       <span className="text-neutral-400 text-base font-medium tracking-tight group-hover:text-white transition-colors shrink-0">
-        {project.title}{isFav && <span className="ml-2 text-sm">⭐</span>}
+        {project.title}
       </span>
       <div className="flex items-center gap-3 flex-wrap">
         {techTags.map(t => (
@@ -65,10 +91,9 @@ export function Home() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#0d0d0d]">
-
       <div className="relative z-10 flex min-h-screen max-w-5xl mx-auto">
 
-        {/* ── Left panel ── */}
+        {/* Left panel */}
         <div className="hidden md:flex flex-col justify-between w-72 shrink-0 px-10 py-16" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", alignSelf: "stretch" }}>
           <div className="flex flex-col gap-8">
             <div>
@@ -79,14 +104,12 @@ export function Home() {
                 Software Engineer
               </p>
             </div>
-
             <p className="text-sm text-neutral-400 leading-relaxed">
               Full-stack developer with five years of hobby experience, specializing in .NET backends and React frontends.
             </p>
             <p className="text-sm text-neutral-400 leading-relaxed -mt-4">
               Built real-time collaborative tools, distributed microservices on Kubernetes, and data-heavy web applications.
             </p>
-
             <div className="flex flex-col gap-2">
               <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
                 className="font-normal text-sm text-neutral-500 hover:text-white transition-colors w-fit cursor-pointer">

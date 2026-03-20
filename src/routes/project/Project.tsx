@@ -39,6 +39,14 @@ const NotFound = ({ slug }: { slug: string }) => (
   <div className="p-not-found">{slug} not found</div>
 );
 
+declare global {
+  interface Window {
+    umami?: {
+      track: (event: string, data?: Record<string, string>) => void;
+    };
+  }
+}
+
 export const Project = () => {
   const location = useLocation();
   const slug = location.path.split("/").pop() ?? "";
@@ -48,6 +56,15 @@ export const Project = () => {
   const [scrolled, setScrolled] = useState(false);
   const [parallaxY, setParallaxY] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1); // remove the #
+    if (hash) {
+      window.umami?.track("resume-click", { jobId: hash });
+
+      window.history.replaceState(null, "", location.path);
+    }
+  }, []);
 
   useEffect(() => {
     const path = `../../projects/${slug}.mdx`;
@@ -118,8 +135,8 @@ export const Project = () => {
           />
 
           {/* Gradient fade to bg */}
-          <div class="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, #0B0B0B 100%)" }} />
-
+          {/*           <div class="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, #0B0B0B 100%)" }} />
+ */}
           {/* Title block */}
           <div
             class="absolute bottom-0 left-0 right-0 mx-auto px-[clamp(1.25rem,4vw,2.5rem)]"
@@ -149,7 +166,7 @@ export const Project = () => {
           </div>
         </div>
       ) : (
-        /* ── No-hero header ── */
+        /* No-hero header */
         <div
           class="mx-auto border-b border-[#222]"
           style={{
@@ -181,7 +198,7 @@ export const Project = () => {
         </div>
       )}
 
-      {/* ── Body ── */}
+      {/* Body */}
       <div
         class="mx-auto"
         style={{

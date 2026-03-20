@@ -1,0 +1,57 @@
+---
+title: "JobTracker"
+subtitle: "A local-first job scraper with a configurable matching engine"
+date: "March 20, 2026"
+tags: ["C#", "React", "Photino", "SQLite", "TailwindCSS"]
+heroImage: "/images/jobtracker.png"
+---
+
+# Overview
+
+**JobTracker** is a desktop application that automates job discovery for developers. It scrapes listings from Platsbanken, ranks them using a configurable scoring engine, and tracks your applications through a simple pipeline - all running locally on your machine.
+
+## How It Works
+
+The app runs as a native desktop application built with Photino, which hosts a React interface and handles background tasks. Data is stored in a local SQLite database.
+
+### The Matching 'Engine'
+
+JobTracker uses a multi-factor scoring system that you configure upfront:
+
+**Profile setup.** You input your years of experience, tech stack keywords, and paste your full CV as text.
+
+**Keyword rules.** You define boosts and penalties for specific terms. Want to avoid senior roles? Penalize "senior," "lead," "architect." Prefer junior-friendly positions? Boost "junior," "entry level," "graduate." These modifiers apply directly to the relevance score.
+
+**Semantic matching.** A local 600M parameter embedding model (Jina v5, 2k token context) compares your CV against full job descriptions. This catches relevant roles even when wording differs—useful for finding positions that mention "React" when your CV says "Next.js," or spotting backend roles that don't explicitly list your exact framework.
+
+**Recency bias.** Newer listings score higher, deprioritizes stale postings.
+
+![Image](/images/jobtracker_3.png)
+
+### Background Scraping
+
+A scheduled service polls Platsbanken for new listings. When matches above your threshold appear, the app sends webhook notifications to Discord.
+
+## Current Features
+
+- **Automated scraping** from Platsbanken, preconfigured for developer roles
+- **Configurable scoring** based on experience level, tech stack, keyword rules, semantic similarity, and listing age
+- **CV context** for semantic comparison against job descriptions
+- **Application tracking** Saved → Applied → Interview → Offer → Rejected
+- **Webhook alerts** for new jobs
+- **Fully local operation** no accounts, no cloud
+
+## What's Next
+
+- **Email integration** to detect recruiter responses and auto-update job statuses
+
+## Tech Stack
+
+- **UI:** React, Mantine, TailwindCSS
+- **Desktop framework:** C#, Photino.NET
+- **Database:** SQLite with Entity Framework Core
+- **Matching:** Local embeddings (Jina v5, 600M parameters, GPU-accelerated), keyword extraction, rule-based scoring
+
+## Links
+
+- [GitHub Repository](https://github.com/hajduty/photinoapp)

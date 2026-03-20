@@ -3,14 +3,12 @@ title: "webclicker"
 subtitle: "Remote Web UI for a desktop application"
 date: "August 21, 2024"
 tags: ["C#", "C++", "React", "TypeScript", ".NET", "MySQL" ,"TailwindCSS"]
-heroImage: "https://imgur.com/fChUpt8.png"
+heroImage: "/images/fChUpt8.png"
 ---
 
-## Try It Out  
-[ Live Demo](https://tbl.hajder.app/#/)  
-[ GitHub Repo](https://github.com/hajduty/webclicker)
+![Image](/images/fChUpt8.png)
 
-##  Overview  
+#  Overview  
 **webclicker** is a remote control system for a C++ application. It consists of:
 
 - A **C++ TCP client** running on the target machine  
@@ -20,21 +18,23 @@ heroImage: "https://imgur.com/fChUpt8.png"
 
 The web interface sends commands to the server, which forwards them to the C++ client over TCP.
 
+[ Live Demo](https://tbl.hajder.app/#/)
+[ GitHub Repo](https://github.com/hajduty/webclicker)
+
 ##  Tech Stack  
 - **Client:** C++  
 - **Server:** .NET + MySQL
 - **Frontend:** React + TypeScript  + Tailwind
 - **Auth:** JWT + HWID based client authentication
 - **Hosting:** Coolify (self-hosted)
-<br/>
+
 ##  What I learned  
 - Building TCP communication in both C++ and C#  
 - Integrating native code with a web interface
 - Securing client-server communication with JWT
 - Applying authentication and lightweight DRM concepts to a native C++ desktop app
-<br/>
+
 ##  What I could improve on the project
 - Use WebSockets for communication
 - Not send commands in JSON, instead explore options like Protobuf
 - Send updates from the C++ desktop app and show them on the dashboard, like errors & status updates.
-<br/>
