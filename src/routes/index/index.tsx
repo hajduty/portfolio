@@ -105,10 +105,13 @@ export function Home() {
               </p>
             </div>
             <p className="text-sm text-neutral-400 leading-relaxed">
-              Full-stack developer with five years of hobby experience, specializing in .NET backends and React frontends.
+              Software development graduate (YH) with five years of
+              project experience building everything from web apps to
+              distributed systems with microservices and Kubernetes.
             </p>
             <p className="text-sm text-neutral-400 leading-relaxed -mt-4">
-              Built real-time collaborative tools, distributed microservices on Kubernetes, and data-heavy web applications.
+              Strongest in .NET and React, with a focus on backend
+              architecture
             </p>
             <div className="flex flex-col gap-2">
               <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
@@ -131,10 +134,13 @@ export function Home() {
             <h1 className="text-2xl font-semibold text-white tracking-tight">Hajder Al-Remahy</h1>
             <p className="font-normal text-sm text-neutral-500 mt-1">Software Engineer</p>
             <p className="text-sm text-neutral-400 leading-relaxed mt-4">
-              Full-stack developer with five years of hobby experience, specializing in .NET backends and React frontends.
+              Software development graduate (YH) with five years of
+              project experience building everything from web apps to
+              distributed systems with microservices and Kubernetes.
             </p>
             <p className="text-sm text-neutral-400 leading-relaxed mt-3">
-              Built real-time collaborative tools, distributed microservices on Kubernetes, and data-heavy web applications.
+              Strongest in .NET and React, with a focus on backend
+              architecture and real-time communication.
             </p>
             <div className="flex gap-5 mt-5">
               <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
