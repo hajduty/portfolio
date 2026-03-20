@@ -3,7 +3,7 @@ import { useLocation } from "preact-iso";
 import { MDXProvider } from "@mdx-js/preact";
 import type { ComponentType } from "preact";
 import "highlight.js/styles/a11y-dark.css";
-import "./Project.css";
+import "./project.css";
 
 const components = {
   h1: ({ ...props }: any) => <h1 {...props} />,
