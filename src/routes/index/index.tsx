@@ -101,7 +101,7 @@ export function Home() {
                 Hajder Al-Remahy
               </h1>
               <p className="font-normal text-sm text-neutral-500 mt-1">
-                Software Engineer
+                Software Developer
               </p>
             </div>
             <p className="text-sm text-neutral-400 leading-relaxed">
