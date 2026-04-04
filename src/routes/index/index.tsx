@@ -110,8 +110,7 @@ export function Home() {
               distributed systems with microservices and Kubernetes.
             </p>
             <p className="text-sm text-neutral-400 leading-relaxed -mt-4">
-              Strongest in .NET and React, with a focus on backend
-              architecture
+              Most comfortable with .NET and React, with a growing interest in backend architecture.
             </p>
             <div className="flex flex-col gap-2">
               <a href="https://www.linkedin.com/in/hajderalremahy" target="_blank" rel="noreferrer"
